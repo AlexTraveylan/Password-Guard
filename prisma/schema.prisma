@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+/// Un modèle pour représenter les mots de passe protégés
+model GuardedPassword {
+  id        Int         @id @default(autoincrement())
+  login     String      @db.VarChar(255)
+  password  Bytes      
+  userId    Int
+  user      UserApp     @relation("user_app_to_guarded_password", fields: [userId], references: [id])
+}
+
+/// Ajouter un champ derniere tentative de connexion ou un modele ?
+/// Un modèle pour représenter les utilisateurs de l'application
+model UserApp {
+  id       Int        @id @default(autoincrement())
+  name     String     
+  email    String     @unique
+  masterPassword Bytes
+  guardedPasswords GuardedPassword[] @relation("user_app_to_guarded_password")
+}
+
+
+
+
+// Commandes :
+// prisma generate

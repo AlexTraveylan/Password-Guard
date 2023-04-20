@@ -1,0 +1,38 @@
+{
+  "private": true,
+  "description": "An example project for NextAuth.js with ts, Oauth2, tailwindcss, and prisma",
+  "bugs": {
+    "url": "https://github.com/nextauthjs/next-auth/issues"
+  },
+  "homepage": "https://next-auth-example.vercel.app",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "Alex Traveylan",
+  "contributors": [
+    "Iain Collins <me@iaincollins.com>",
+    "Balázs Orbán <info@balazsorban.com>",
+    "Nico Domino <yo@ndo.dev>",
+    "Lluis Agusti <hi@llu.lu>"
+  ],
+  "dependencies": {
+    "@prisma/client": "^4.13.0",
+    "eslint": "^8.36.0",
+    "next": "latest",
+    "next-auth": "latest",
+    "nodemailer": "^6",
+    "prettier": "^2.8.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17",
+    "@types/react": "^18.0.15",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.7",
+    "typescript": "^4"
+  }
+}
