@@ -36,12 +36,16 @@ export class GuardedPasswordService {
     const guardedPassword = await prisma.guardedPassword.findUnique({
       where: { id },
     })
+
+    return guardedPassword
   }
 
   async deleteGuardedPasswordById(id: number) {
     const guardedPassword = await prisma.guardedPassword.delete({
       where: { id },
     })
+
+    return guardedPassword
   }
 
   // TODO A supprimer et chercher l'user par masterPassword
