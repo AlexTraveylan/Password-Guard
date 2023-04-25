@@ -1,26 +1,19 @@
-import { useState, useEffect } from "react"
-import { useSession } from "next-auth/react"
-import Layout from "../components/layout"
-import AccessDenied from "../components/access-denied"
+import { useSession } from 'next-auth/react'
+import { useState } from 'react'
+import AccessDenied from '../components/access-denied'
+import { AddPasswordForm } from '../components/add-password-form'
+import Layout from '../components/layout'
+import { MasterForm } from '../components/master-form'
+import { SvgAddPassword } from '../components/shared/svgs'
 
 export default function ProtectedPage() {
   const { data: session } = useSession()
-  const [content, setContent] = useState()
+  const [isShow, setIsShow] = useState(false)
 
-  // Fetch content from protected route
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("/api/examples/protected")
-      const json = await res.json()
-      if (json.content) {
-        setContent(json.content)
-      }
-    }
-    fetchData()
-  }, [session])
- 
+  function toggleIsShow() {
+    setIsShow(!isShow)
+  }
 
-  // If no session exists, display access denied message
   if (!session) {
     return (
       <Layout>
@@ -32,10 +25,17 @@ export default function ProtectedPage() {
   // If session exists, display content
   return (
     <Layout>
-      <h1>Protected Page</h1>
-      <p>
-        <strong>{content ?? "\u00a0"}</strong>
-      </p>
+      <h1 className="text-5xl font-semibold mb-5">
+        Acceder à vos mots de passe
+      </h1>
+      <MasterForm />
+      <div
+        className="text-center m-3 cursor-pointer"
+        onClick={() => toggleIsShow()}
+      >
+        <SvgAddPassword />
+      </div>
+      <AddPasswordForm isShow={isShow} />
     </Layout>
   )
 }

@@ -3,12 +3,14 @@ import { prisma } from '../prisma-client'
 
 export class GuardedPasswordService {
   async createGuardPassword({
+    title,
     login,
     password,
     userId,
   }: Omit<GuardedPassword, 'id'>) {
     const guardedPassword = await prisma.guardedPassword.create({
       data: {
+        title,
         login,
         password,
         userId,
@@ -19,12 +21,14 @@ export class GuardedPasswordService {
 
   async updateGuardPassword({
     id,
+    title,
     login,
     password,
   }: Omit<GuardedPassword, 'userId'>) {
     const guardedPassword = await prisma.guardedPassword.update({
       where: { id },
       data: {
+        title,
         login,
         password,
       },

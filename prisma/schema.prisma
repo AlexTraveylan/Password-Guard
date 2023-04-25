@@ -14,6 +14,7 @@ datasource db {
 /// Un modèle pour représenter les mots de passe protégés
 model GuardedPassword {
   id        Int         @id @default(autoincrement())
+  title     String      @db.VarChar(255)
   login     String      @db.VarChar(255)
   password  Bytes      
   userId    Int
