@@ -33,8 +33,6 @@ export default function ProtectedPage() {
     checkIsUserExist()
   }, [])
 
-  async function handleCreateMasterPassword() {}
-
   if (!session) {
     return (
       <Layout>
@@ -75,26 +73,4 @@ export default function ProtectedPage() {
       <AccessDenied />
     </Layout>
   )
-
-  // return (
-  //   <Layout>
-  //     <h1 className="text-5xl font-semibold mb-5">
-  //       Choississez votre MasterPassword
-  //     </h1>
-  //     <MasterForm />
-  //     {/* <div
-  //       className="text-center m-3 cursor-pointer"
-  //       onClick={() => toggleIsShow()}
-  //     >
-  //       <SvgAddPassword />
-  //     </div>
-  //     <AddPasswordForm isShow={isShow} /> */}
-  //   </Layout>
-  // )
-
-  // function toggleIsShow() {
-  //   setIsShow(!isShow)
-  // }
-
-  // const [isShow, setIsShow] = useState(false)
 }
