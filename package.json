@@ -7,7 +7,7 @@
   "homepage": "https://next-auth-example.vercel.app",
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "next build && prisma generate",
     "start": "next start"
   },
   "author": "Alex Traveylan",
