@@ -50,7 +50,9 @@ export default function Header() {
         </div>
         <hr />
       </header>
-      <ReturnButton path="/" />
+      <div className="p-4">
+        <ReturnButton path="/" />
+      </div>
     </>
   )
 }

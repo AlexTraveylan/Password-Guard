@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react'
-import { ButtonApp } from './shared/buttonApp'
 import Link from 'next/link'
 import { Description } from './description'
+import { ButtonApp } from './shared/buttonApp'
 
 export default function BtnAccesIfLogged() {
   const { data: session } = useSession()

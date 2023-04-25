@@ -1,18 +1,39 @@
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import AccessDenied from '../components/access-denied'
-import { AddPasswordForm } from '../components/add-password-form'
 import Layout from '../components/layout'
-import { MasterForm } from '../components/master-form'
-import { SvgAddPassword } from '../components/shared/svgs'
+import { MasterFormCreate } from '../components/master-form-create'
+import { Loader } from '../components/shared/loader'
+
+type apiIsUserResponse = {
+  action: '1' | '2'
+}
 
 export default function ProtectedPage() {
   const { data: session } = useSession()
-  const [isShow, setIsShow] = useState(false)
+  const router = useRouter()
+  const [isUserNotCreated, setIsUserNotCreated] = useState(false)
+  const [isLoadingUser, setIsLoadingUser] = useState(true)
 
-  function toggleIsShow() {
-    setIsShow(!isShow)
+  async function checkIsUserExist() {
+    const response = await fetch(`api/user/isUser`)
+    if (response.ok) {
+      const responseType: apiIsUserResponse = await response.json()
+      if (responseType.action === '1') {
+        router.push('/view')
+      } else {
+        setIsUserNotCreated(true)
+      }
+    }
+    setIsLoadingUser(false)
   }
+
+  useEffect(() => {
+    checkIsUserExist()
+  }, [])
+
+  async function handleCreateMasterPassword() {}
 
   if (!session) {
     return (
@@ -22,20 +43,58 @@ export default function ProtectedPage() {
     )
   }
 
-  // If session exists, display content
+  if (isLoadingUser) {
+    return (
+      <Layout>
+        <Loader show={isLoadingUser} />
+      </Layout>
+    )
+  }
+
+  if (isUserNotCreated) {
+    return (
+      <Layout>
+        <h1 className="text-5xl font-semibold mb-5 text-center px-3">
+          Choississez votre Master Password.
+        </h1>
+        <h2 className="text-2xl mb-5 text-center px-3">
+          Assurez-vous d'avoir une connexion sécurisée lors de la création de
+          votre master password.
+        </h2>
+        <h3 className="mb-5 text-center px-3">
+          Il doit posseder au minimum 15 caractères, une minuscule, une
+          MAJUSCULE, un chiffre, un caractère spécial.
+        </h3>
+        <MasterFormCreate />
+      </Layout>
+    )
+  }
+
   return (
     <Layout>
-      <h1 className="text-5xl font-semibold mb-5">
-        Acceder à vos mots de passe
-      </h1>
-      <MasterForm />
-      <div
-        className="text-center m-3 cursor-pointer"
-        onClick={() => toggleIsShow()}
-      >
-        <SvgAddPassword />
-      </div>
-      <AddPasswordForm isShow={isShow} />
+      <AccessDenied />
     </Layout>
   )
+
+  // return (
+  //   <Layout>
+  //     <h1 className="text-5xl font-semibold mb-5">
+  //       Choississez votre MasterPassword
+  //     </h1>
+  //     <MasterForm />
+  //     {/* <div
+  //       className="text-center m-3 cursor-pointer"
+  //       onClick={() => toggleIsShow()}
+  //     >
+  //       <SvgAddPassword />
+  //     </div>
+  //     <AddPasswordForm isShow={isShow} /> */}
+  //   </Layout>
+  // )
+
+  // function toggleIsShow() {
+  //   setIsShow(!isShow)
+  // }
+
+  // const [isShow, setIsShow] = useState(false)
 }
