@@ -2,7 +2,9 @@ import { ButtonApp } from './shared/buttonApp'
 import { Input } from './shared/input'
 
 export function AddPasswordForm({ isShow }: { isShow: boolean }) {
-  function handleSubmit() {}
+  function handleSubmit(e: React.MouseEvent) {
+    e.preventDefault()
+  }
 
   if (!isShow) {
     return <></>
@@ -13,7 +15,7 @@ export function AddPasswordForm({ isShow }: { isShow: boolean }) {
       <Input label="Titre" type="text" name="titre" />
       <Input label="Login" type="text" name="login" />
       <Input label="Password" type="password" name="password" />
-      <div onClick={handleSubmit} className="text-center">
+      <div onClick={(e) => handleSubmit(e)} className="text-center">
         <ButtonApp>Nouveau mot de passe</ButtonApp>
       </div>
     </form>
