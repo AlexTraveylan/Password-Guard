@@ -28,6 +28,7 @@ model UserApp {
   name     String     
   email    String     @unique
   masterPassword Bytes
+  salt     String
   guardedPasswords GuardedPassword[] @relation("user_app_to_guarded_password")
 }
 

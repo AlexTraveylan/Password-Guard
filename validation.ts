@@ -15,6 +15,7 @@ export const UserAppSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   masterPassword: z.instanceof(Buffer),
+  salt: z.string(),
   guardedPasswords: z.array(GuardedPasswordSchema).optional(),
 })
 

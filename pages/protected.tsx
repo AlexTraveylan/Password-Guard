@@ -52,17 +52,9 @@ export default function ProtectedPage() {
   if (isUserNotCreated) {
     return (
       <Layout>
-        <h1 className="text-5xl font-semibold mb-5 text-center px-3">
-          Choississez votre Master Password.
-        </h1>
-        <h2 className="text-2xl mb-5 text-center px-3">
-          Assurez-vous d'avoir une connexion sécurisée lors de la création de
-          votre master password.
-        </h2>
-        <h3 className="mb-5 text-center px-3">
-          Il doit posseder au minimum 15 caractères, une minuscule, une
-          MAJUSCULE, un chiffre, un caractère spécial.
-        </h3>
+        <h1 className="text-5xl font-semibold mb-5 text-center px-3">Choississez votre Master Password.</h1>
+        <h2 className="text-2xl mb-5 text-center px-3">Assurez-vous d'avoir une connexion sécurisée lors de la création de votre master password.</h2>
+        <h3 className="mb-5 text-center px-3">Il doit posseder au minimum 15 caractères, une minuscule, une MAJUSCULE, un chiffre, un caractère spécial (Parmi : $ * % @ ! ? &)</h3>
         <MasterFormCreate />
       </Layout>
     )
