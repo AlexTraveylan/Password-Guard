@@ -4,6 +4,7 @@ CREATE TABLE "GuardedPassword" (
     "title" VARCHAR(255) NOT NULL,
     "login" VARCHAR(255) NOT NULL,
     "password" BYTEA NOT NULL,
+    "encryptedAESKey" BYTEA NOT NULL,
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "GuardedPassword_pkey" PRIMARY KEY ("id")
@@ -15,6 +16,9 @@ CREATE TABLE "UserApp" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "masterPassword" BYTEA NOT NULL,
+    "salt" TEXT NOT NULL,
+    "publicKey" BYTEA NOT NULL,
+    "privateKey" BYTEA NOT NULL,
 
     CONSTRAINT "UserApp_pkey" PRIMARY KEY ("id")
 );

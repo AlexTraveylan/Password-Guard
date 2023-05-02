@@ -6,7 +6,7 @@ import Layout from '../components/layout'
 import { MasterFormCreate } from '../components/master-form-create'
 import { Loader } from '../components/shared/loader'
 
-type apiIsUserResponse = {
+export type apiIsUserResponse = {
   action: '1' | '2'
 }
 
@@ -21,7 +21,7 @@ export default function ProtectedPage() {
     if (response.ok) {
       const responseType: apiIsUserResponse = await response.json()
       if (responseType.action === '1') {
-        router.push('/view')
+        router.push('/check')
       } else {
         setIsUserNotCreated(true)
       }

@@ -36,7 +36,7 @@ export function MasterFormCreate() {
             })
 
             if (response.ok) {
-              router.push('/view')
+              router.push('/check')
             } else {
               console.error("Une erreur s'est produite")
             }

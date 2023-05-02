@@ -2,35 +2,27 @@ import { GuardedPassword } from '@prisma/client'
 import { prisma } from '../prisma-client'
 
 export class GuardedPasswordService {
-  async createGuardPassword({
-    title,
-    login,
-    password,
-    userId,
-  }: Omit<GuardedPassword, 'id'>) {
+  async createGuardPassword({ title, login, password, encryptedAESKey, userId }: Omit<GuardedPassword, 'id'>) {
     const guardedPassword = await prisma.guardedPassword.create({
       data: {
         title,
         login,
         password,
+        encryptedAESKey,
         userId,
       },
     })
     return guardedPassword
   }
 
-  async updateGuardPassword({
-    id,
-    title,
-    login,
-    password,
-  }: Omit<GuardedPassword, 'userId'>) {
+  async updateGuardPassword({ id, title, login, password, encryptedAESKey }: Omit<GuardedPassword, 'userId'>) {
     const guardedPassword = await prisma.guardedPassword.update({
       where: { id },
       data: {
         title,
         login,
         password,
+        encryptedAESKey,
       },
     })
     return guardedPassword
@@ -52,7 +44,6 @@ export class GuardedPasswordService {
     return guardedPassword
   }
 
-  // TODO A supprimer et chercher l'user par masterPassword
   async getAllGuardedPasswordByUserID(userId: number) {
     const guardedPasswords = await prisma.guardedPassword.findMany({
       where: {

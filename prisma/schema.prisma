@@ -16,7 +16,8 @@ model GuardedPassword {
   id        Int         @id @default(autoincrement())
   title     String      @db.VarChar(255)
   login     String      @db.VarChar(255)
-  password  Bytes      
+  password                Bytes
+  encryptedAESKey         Bytes     
   userId    Int
   user      UserApp     @relation("user_app_to_guarded_password", fields: [userId], references: [id])
 }
@@ -29,6 +30,8 @@ model UserApp {
   email    String     @unique
   masterPassword Bytes
   salt     String
+  publicKey     Bytes
+  privateKey    Bytes
   guardedPasswords GuardedPassword[] @relation("user_app_to_guarded_password")
 }
 

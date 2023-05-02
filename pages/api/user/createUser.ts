@@ -4,6 +4,7 @@ import { authOptions } from '../auth/[...nextauth]'
 
 import { UserApp } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { generateRSAKeyPair } from '../../../prisma/services/security.service'
 import { UserAppService } from '../../../prisma/services/userApp.service'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -21,12 +22,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       try {
         const doubleHashedMaster = await bcrypt.hash(hashMaster, randomSalt)
+        const { privateKey, publicKey } = generateRSAKeyPair()
 
         const newUser: Omit<UserApp, 'id'> = {
           email: session.user.email,
           name: session.user.name,
           masterPassword: Buffer.from(doubleHashedMaster, 'utf-8'),
           salt: randomSalt,
+          privateKey: Buffer.from(privateKey.toString(), 'utf-8'),
+          publicKey: Buffer.from(publicKey.toString(), 'utf-8'),
         }
 
         try {

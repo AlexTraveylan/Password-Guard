@@ -1,9 +1,9 @@
-import bcrypt from 'bcrypt'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { generateAccessToken, generateRefreshToken } from '../../../prisma/services/auth.service'
+import { UserAppService } from '../../../prisma/services/userApp.service'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../auth/[...nextauth]'
-
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { UserAppService } from '../../../prisma/services/userApp.service'
+import bcrypt from 'bcrypt'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
@@ -20,7 +20,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const clientDoubleHashedMasterBuffer = Buffer.from(clientDoubleHashedMaster)
 
       if (clientDoubleHashedMasterBuffer.equals(masterPassword)) {
-        return res.status(200).json({ message: 'Correspondance ok' })
+        const accessToken = generateAccessToken(session.user.email)
+        const refreshToken = generateRefreshToken(session.user.email)
+        const privateKey = searchUser.privateKey.toString('utf-8')
+
+        res.setHeader('Set-Cookie', [
+          `accessToken=${accessToken}; HttpOnly; Secure; SameSite=Strict; Max-Age=${60 * 60}; Path=/`,
+          `refreshToken=${refreshToken}; HttpOnly; Secure; SameSite=Strict; Max-Age=${30 * 24 * 60 * 60}; Path=/`,
+        ])
+
+        return res.status(200).json({ message: 'Correspondance ok', privateKey: privateKey })
       }
     }
   }

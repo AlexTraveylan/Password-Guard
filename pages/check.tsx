@@ -1,12 +1,30 @@
 import CryptoJS from 'crypto-js'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import AccessDenied from '../components/access-denied'
 import Layout from '../components/layout'
 import { ButtonApp } from '../components/shared/buttonApp'
 import { Input } from '../components/shared/input'
+import { Loader } from '../components/shared/loader'
+import { apiIsUserResponse } from './protected'
 
 export default function ProtectedPage() {
   const { data: session } = useSession()
+  const router = useRouter()
+  const [isAcces, setIsAcces] = useState(false)
+  const [isLoad, setIsLoad] = useState(true)
+
+  async function checkIsUserExist() {
+    const response = await fetch(`api/user/isUser`)
+    if (response.ok) {
+      const responseType: apiIsUserResponse = await response.json()
+      if (responseType.action === '2') {
+        setIsAcces(true)
+      }
+    }
+    setIsLoad(false)
+  }
 
   async function checkPassword(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -24,13 +42,31 @@ export default function ProtectedPage() {
           },
           body: JSON.stringify({ clientHashedMaster: hashedMaster }),
         })
+
+        if (response.ok) {
+          const data: { message: string; privateKey: string } = await response.json()
+          localStorage.setItem('privateKey', data.privateKey)
+          router.push('/viewPassword')
+        }
       } catch (error) {
         console.error(error)
       }
     }
   }
 
-  if (!session) {
+  useEffect(() => {
+    checkIsUserExist()
+  }, [])
+
+  if (isLoad) {
+    return (
+      <Layout>
+        <Loader show={isLoad} />
+      </Layout>
+    )
+  }
+
+  if (!session || isAcces) {
     return (
       <Layout>
         <AccessDenied />
@@ -40,7 +76,7 @@ export default function ProtectedPage() {
 
   return (
     <Layout>
-      <h1>Ici la liste des mots de passes protegés</h1>
+      <h1>Vérification de votre identité :</h1>
       <form onSubmit={checkPassword}>
         <Input label="Entrer votre master password" type="password" name="master" />
         <ButtonApp type="submit">Vérifer</ButtonApp>
