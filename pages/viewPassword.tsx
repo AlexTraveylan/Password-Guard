@@ -75,7 +75,7 @@ export default function ProtectedPage() {
       </div>
       <AddPasswordForm isShow={isShow} recupPasswords={recupPasswords} />
       {isAcces && passwords.length > 0 && (
-        <div className="flex flex-row gap-3">
+        <div className="flex flex-row gap-3 flex-wrap justify-center">
           {passwords.map((password) => {
             return <PasswordCard password={password} />
           })}

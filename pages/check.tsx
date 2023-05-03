@@ -77,9 +77,9 @@ export default function ProtectedPage() {
   return (
     <Layout>
       <h1>Vérification de votre identité :</h1>
-      <form onSubmit={checkPassword}>
+      <form onSubmit={checkPassword} className="text-center">
         <Input label="Entrer votre master password" type="password" name="master" />
-        <ButtonApp type="submit">Vérifer</ButtonApp>
+        <ButtonApp type="submit">Vérifier</ButtonApp>
       </form>
     </Layout>
   )
