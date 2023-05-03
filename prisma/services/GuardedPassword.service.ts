@@ -2,11 +2,12 @@ import { GuardedPassword } from '@prisma/client'
 import { prisma } from '../prisma-client'
 
 export class GuardedPasswordService {
-  async createGuardPassword({ title, login, password, encryptedAESKey, userId }: Omit<GuardedPassword, 'id'>) {
+  async createGuardPassword({ title, login, iv, password, encryptedAESKey, userId }: Omit<GuardedPassword, 'id'>) {
     const guardedPassword = await prisma.guardedPassword.create({
       data: {
         title,
         login,
+        iv,
         password,
         encryptedAESKey,
         userId,

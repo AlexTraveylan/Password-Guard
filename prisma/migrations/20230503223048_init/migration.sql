@@ -3,6 +3,7 @@ CREATE TABLE "GuardedPassword" (
     "id" SERIAL NOT NULL,
     "title" VARCHAR(255) NOT NULL,
     "login" VARCHAR(255) NOT NULL,
+    "iv" TEXT NOT NULL,
     "password" BYTEA NOT NULL,
     "encryptedAESKey" BYTEA NOT NULL,
     "userId" INTEGER NOT NULL,

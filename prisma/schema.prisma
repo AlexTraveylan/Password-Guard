@@ -16,6 +16,7 @@ model GuardedPassword {
   id        Int         @id @default(autoincrement())
   title     String      @db.VarChar(255)
   login     String      @db.VarChar(255)
+  iv        String
   password                Bytes
   encryptedAESKey         Bytes     
   userId    Int

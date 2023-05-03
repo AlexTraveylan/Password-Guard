@@ -4,7 +4,9 @@ export const GuardedPasswordSchema = z.object({
   id: z.number().int().nonnegative(),
   title: z.string().max(255),
   login: z.string().max(255),
+  iv: z.string(),
   password: z.instanceof(Buffer),
+  encryptedAESKey: z.instanceof(Buffer),
   userId: z.number().int(),
 })
 
@@ -16,6 +18,8 @@ export const UserAppSchema = z.object({
   email: z.string().email(),
   masterPassword: z.instanceof(Buffer),
   salt: z.string(),
+  publicKey: z.instanceof(Buffer),
+  privateKey: z.instanceof(Buffer),
   guardedPasswords: z.array(GuardedPasswordSchema).optional(),
 })
 

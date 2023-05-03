@@ -1,9 +1,9 @@
 import { useRef } from 'react'
-import { encryptPassword, generateAESKey } from '../prisma/services/security.service'
+import { encryptPassword, generateAESKey, publicKeyEncrypt } from '../prisma/services/security.service'
 import { ButtonApp } from './shared/buttonApp'
 import { Input } from './shared/input'
 
-export function AddPasswordForm({ isShow }: { isShow: boolean }) {
+export function AddPasswordForm({ isShow, recupPasswords }: { isShow: boolean; recupPasswords: () => Promise<void> }) {
   const formRef = useRef<HTMLFormElement>(null)
 
   async function handleSubmit(e: React.MouseEvent) {
@@ -21,6 +21,7 @@ export function AddPasswordForm({ isShow }: { isShow: boolean }) {
     // Chiffrez le mot de passe à l'aide d'une clé AES
     const aesKey = generateAESKey()
     const encryptedPasswordData = encryptPassword(password, aesKey)
+    const encryptedPasswordDataJSON = JSON.stringify(encryptedPasswordData)
 
     const response = await fetch('/api/user/getPublicKey')
     if (!response.ok) {
@@ -39,10 +40,11 @@ export function AddPasswordForm({ isShow }: { isShow: boolean }) {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify({ titre, login, encryptedPasswordData, encryptedAESKey }),
+      body: JSON.stringify({ titre, login, encryptedPasswordDataJSON, encryptedAESKey }),
     })
 
     if (response2.ok) {
+      recupPasswords()
     }
   }
 
@@ -60,7 +62,4 @@ export function AddPasswordForm({ isShow }: { isShow: boolean }) {
       </div>
     </form>
   )
-}
-function publicKeyEncrypt(aesKey: Buffer, publicKey: string) {
-  throw new Error('Function not implemented.')
 }

@@ -17,7 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (session?.user?.email && req.method === 'POST') {
     const currentUser = await userService.getUserAppByEmail(session.user.email)
-    const { titre, login, encryptedPasswordData, encryptedAESKey }: { titre: string; login: string; encryptedPasswordData: string; encryptedAESKey: string } = req.body
+    const { titre, login, encryptedPasswordDataJSON, encryptedAESKey }: { titre: string; login: string; encryptedPasswordDataJSON: string; encryptedAESKey: string } = req.body
+    const encryptedPasswordData: { iv: string; encryptedPassword: string } = JSON.parse(encryptedPasswordDataJSON)
 
     if (!currentUser || !titre || !login || !encryptedPasswordData || !encryptedAESKey) {
       return res.status(400).json({ error: 'manque de données' })
@@ -26,7 +27,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const newPassword = await guardedPasswordsService.createGuardPassword({
       title: titre,
       login: login,
-      password: Buffer.from(encryptedPasswordData, 'base64'),
+      iv: encryptedPasswordData.iv,
+      password: Buffer.from(encryptedPasswordData.encryptedPassword, 'hex'),
       encryptedAESKey: Buffer.from(encryptedAESKey, 'base64'),
       userId: currentUser.id,
     })

@@ -12,7 +12,8 @@ export function generateRSAKeyPair() {
   }
 }
 
-function publicKeyEncrypt(data: Buffer, publicKey: string): string {
+// Encrypt RSA avec public key
+export function publicKeyEncrypt(data: Buffer, publicKey: string): string {
   const publicKeyBuffer = Buffer.from(publicKey, 'utf-8')
   const encryptedData = crypto.publicEncrypt(
     {
@@ -23,6 +24,19 @@ function publicKeyEncrypt(data: Buffer, publicKey: string): string {
   )
 
   return encryptedData.toString('base64')
+}
+
+// decrypt RSA avec private key
+export function privateKeyDecrypt(encryptedDataBuffer: Buffer, privateKeyBuffer: Buffer): Buffer {
+  const decryptedData = crypto.privateDecrypt(
+    {
+      key: privateKeyBuffer,
+      padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+    },
+    encryptedDataBuffer
+  )
+
+  return decryptedData
 }
 
 // Générer une clé de chiffrement AES
@@ -36,6 +50,7 @@ export type encryptData = {
   encryptedPassword: string
 }
 
+// encrypte avec AES
 export function encryptPassword(password: string, aesKey: Buffer): encryptData {
   const algorithm = 'aes-256-cbc' // Utiliser AES-256 avec le mode CBC
   const ivLength = 16 // La taille d'un vecteur d'initialisation (IV) pour AES-256-CBC est de 16 octets
@@ -53,6 +68,7 @@ export function encryptPassword(password: string, aesKey: Buffer): encryptData {
   return encryptedData
 }
 
+// decrypt avec AES
 export function decryptPassword(encryptedPasswordData: encryptData, aesKey: Buffer): string {
   const algorithm = 'aes-256-cbc'
   const iv = Buffer.from(encryptedPasswordData.iv, 'hex')
@@ -63,19 +79,3 @@ export function decryptPassword(encryptedPasswordData: encryptData, aesKey: Buff
 
   return decrypted
 }
-
-// async function decryptPrivateKey(privateKeyBuffer: Buffer, derivedPassword: string): Promise<crypto.KeyObject> {
-//   const privateKeyDecrypted = await crypto.webcrypto.subtle.decrypt(
-//     {
-//       name: 'RSA-OAEP',
-//     },
-//     derivedPassword,
-//     privateKeyBuffer
-//   )
-
-//   return crypto.createPrivateKey({
-//     key: privateKeyDecrypted,
-//     format: 'der',
-//     type: 'pkcs1',
-//   })
-// }
