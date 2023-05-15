@@ -28,7 +28,7 @@ export function PasswordCard({ password }: { password: PassBdd }) {
     <div key={password.id} className="shadow-md p-5 rounded-md relative">
       {show && (
         <div className="absolute p-5 bg-black z-99 top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%] rounded-md text-white flex flex-col gap-3 items-center justify-center border-2 border-indigo-500">
-          <div className="absolute top-0 right-0 p-1 text-red-500" onClick={() => setShow(false)}>
+          <div className="absolute top-0 right-0 p-1 text-red-500 cursor-pointer" onClick={() => setShow(false)}>
             <SvgClose stroke={1.7} />
           </div>
           <h3>{password.login}</h3>
