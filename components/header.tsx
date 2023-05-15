@@ -1,7 +1,6 @@
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { ReturnButton } from './shared/return'
-import { Connexion, Deconnexion, Logo } from './shared/svgs'
+import { Logo, SvgConnexion, SvgDeconnexion } from './shared/svgs'
 
 export default function Header() {
   const { data: session } = useSession()
@@ -17,9 +16,7 @@ export default function Header() {
             <>
               <div className="hidden flex-col items-center sm:flex">
                 <p>Connecté en tant que :</p>
-                <p className="font-bold">
-                  {session.user.name ?? session.user.email}
-                </p>
+                <p className="font-bold">{session.user.name ?? session.user.email}</p>
               </div>
               <Link
                 className="min-w-[20%] flex justify-end"
@@ -29,7 +26,7 @@ export default function Header() {
                   signOut()
                 }}
               >
-                <Deconnexion />
+                <SvgDeconnexion />
               </Link>
             </>
           ) : (
@@ -43,16 +40,13 @@ export default function Header() {
                   signIn()
                 }}
               >
-                <Connexion />
+                <SvgConnexion />
               </Link>
             </>
           )}
         </div>
         <hr />
       </header>
-      <div className="p-4">
-        <ReturnButton path="/" />
-      </div>
     </>
   )
 }

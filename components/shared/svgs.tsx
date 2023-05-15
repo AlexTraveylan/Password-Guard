@@ -1,3 +1,8 @@
+interface SvgProps {
+  size?: number
+  stroke?: number
+}
+
 export function Logo() {
   return (
     <svg width="40px" height="40px" strokeWidth="1.3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#000000">
@@ -13,7 +18,7 @@ export function Logo() {
   )
 }
 
-export function Deconnexion() {
+export function SvgDeconnexion() {
   return (
     <svg
       className="cursor-pointer ease-in duration-100 hover:scale-110"
@@ -34,7 +39,7 @@ export function Deconnexion() {
   )
 }
 
-export function Connexion() {
+export function SvgConnexion() {
   return (
     <svg
       className="cursor-pointer ease-in duration-100 hover:scale-110"
@@ -132,6 +137,60 @@ export function SvgUser() {
   return (
     <svg width="25px" height="25px" strokeWidth="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#000000">
       <path d="M5 20v-1a7 7 0 017-7v0a7 7 0 017 7v1M12 12a4 4 0 100-8 4 4 0 000 8z" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+    </svg>
+  )
+}
+
+export function SvgChevronLeft({ size = 25, stroke = 1.3 }: SvgProps) {
+  return (
+    <svg width={`${size}px`} height={`${size}px`} strokeWidth={`${stroke}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="rgb(55 65 81)">
+      <path d="M15 6l-6 6 6 6" stroke="rgb(55 65 81)" strokeWidth={`${stroke}`} strokeLinecap="round" strokeLinejoin="round"></path>
+    </svg>
+  )
+}
+
+export function SvgChevronRight({ size = 25, stroke = 1.3 }: SvgProps) {
+  return (
+    <svg width={`${size}px`} height={`${size}px`} strokeWidth={`${stroke}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="rgb(55 65 81)">
+      <path d="M9 6l6 6-6 6" stroke="rgb(55 65 81)" strokeWidth={`${stroke}`} strokeLinecap="round" strokeLinejoin="round"></path>
+    </svg>
+  )
+}
+
+export function SvgPlus({ size = 25, stroke = 1.3 }: SvgProps) {
+  return (
+    <svg
+      width={`${size}px`}
+      height={`${size}px`}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={`${stroke}`}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M12 5.75v12.5"></path>
+      <path d="M18.25 12H5.75"></path>
+    </svg>
+  )
+}
+
+export function SvgClose({ size = 25, stroke = 1.3 }: SvgProps) {
+  return (
+    <svg
+      width={`${size}px`}
+      height={`${size}px`}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={`${stroke}`}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="m17.25 6.75-10.5 10.5"></path>
+      <path d="m6.75 6.75 10.5 10.5"></path>
     </svg>
   )
 }
