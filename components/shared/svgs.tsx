@@ -194,3 +194,41 @@ export function SvgClose({ size = 25, stroke = 1.3 }: SvgProps) {
     </svg>
   )
 }
+export function SvgTrash({ size = 25, stroke = 1.3 }: SvgProps) {
+  return (
+    <svg
+      width={`${size}`}
+      height={`${size}`}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={`${stroke}`}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="m6.75 7.75.841 9.673a2 2 0 0 0 1.993 1.827h4.832a2 2 0 0 0 1.993-1.827l.841-9.673"></path>
+      <path d="M9.75 7.5v-.75a2 2 0 0 1 2-2h.5a2 2 0 0 1 2 2v.75"></path>
+      <path d="M5 7.75h14"></path>
+    </svg>
+  )
+}
+
+export function SvgEdit({ size = 25, stroke = 1.3 }: SvgProps) {
+  return (
+    <svg
+      width={`${size}px`}
+      height={`${size}px`}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={`${stroke}`}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="m4.75 19.25 4.25-1 9.293-9.293a1 1 0 0 0 0-1.414l-1.836-1.836a1 1 0 0 0-1.414 0L5.75 15l-1 4.25Z"></path>
+      <path d="M19.25 19.25h-5.5"></path>
+    </svg>
+  )
+}

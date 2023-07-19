@@ -77,7 +77,7 @@ export default function ProtectedPage() {
       {isAcces && passwords.length > 0 && (
         <div className="flex flex-row gap-3 flex-wrap justify-center">
           {passwords.map((password) => {
-            return <PasswordCard password={password} />
+            return <PasswordCard password={password} recupPasswords={recupPasswords} />
           })}
         </div>
       )}
